@@ -25,6 +25,6 @@ The world is a book and those who do not travel read only one page. A traveller 
 - CRUD operations are highlighted
 - Contact Us if you wanna book any accommodation for travel
 
-## Server Side Code
+## Client Side Code
 
-Server Side : https://github.com/UniqueSwagger/UGoOnTravel_Server
+Client Side : https://github.com/UniqueSwagger/UGoOnTravel_Client
