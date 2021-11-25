@@ -25,6 +25,7 @@ const run = async () => {
     const database = client.db("travelDb");
     const packageCollection = database.collection("packages");
     const bookingCollection = database.collection("bookings");
+    const usersCollection = database.collection("users");
 
     //get all packages
     app.get("/packages", async (req, res) => {
@@ -92,6 +93,56 @@ const run = async () => {
         options
       );
       res.send(result);
+    });
+    //post users
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+
+    //get users
+    app.get("/users", async (req, res) => {
+      const result = await usersCollection.find({}).toArray();
+      res.send(result);
+    });
+
+    //externally made for google or github sign in
+    app.put("/users", async (req, res) => {
+      const user = req.body;
+      const filter = { email: user.email };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: user,
+      };
+      const result = await usersCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
+
+    //role play updating for admin
+    app.put("/users/admin", async (req, res) => {
+      const user = req.body;
+      const filter = { email: user.email };
+      const updateDoc = {
+        $set: { role: "admin" },
+      };
+      const result = await usersCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
+    //getting admin
+    app.get("/users/:email", async (req, res) => {
+      const email = req.params.email;
+      const user = await usersCollection.findOne({ email: email });
+      let isAdmin = false;
+      if (user?.role === "admin") {
+        isAdmin = true;
+      }
+      res.send({ admin: isAdmin });
     });
   } finally {
     // await client.close();
