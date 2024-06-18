@@ -6,13 +6,16 @@ const ObjectId = require("mongodb").ObjectId;
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 //middleware
-app.use(cors({
+const corsOption ={
   origin:[
-    "http://localhost:3000",
-    "https://ugoontravel-43d92.web.app"
+    "http://localhost:3000/",
+    "https://ugoontravel-43d92.web.app/"
   ],
-  optionsSuccessStatus: 200
-}));
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: ['Content-Type', 'Authorization']
+}
+app.use(cors());
+
 app.use(express.json({ limit: "50mb" }));
 
 app.get("/", (req, res) => {
