@@ -8,8 +8,8 @@ const port = process.env.PORT || 5000;
 //middleware
 app.use(cors({
   origin:[
-    "http://localhost:3000/",
-    "https://ugoontravel-43d92.web.app/"
+    "http://localhost:3000",
+    "https://ugoontravel-43d92.web.app"
   ],
   optionsSuccessStatus: 200
 }));
