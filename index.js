@@ -10,7 +10,8 @@ app.use(cors({
   origin:[
     "http://localhost:3000/",
     "https://ugoontravel-43d92.web.app/"
-  ]
+  ],
+  optionsSuccessStatus: 200
 }));
 app.use(express.json({ limit: "50mb" }));
 
