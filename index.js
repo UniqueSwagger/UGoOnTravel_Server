@@ -6,17 +6,30 @@ const ObjectId = require("mongodb").ObjectId;
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 //middleware
-const corsOption ={
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // Allow all origins
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+  // If it's a preflight request, respond immediately
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  next();
+});
+
+
+app.use(cors({
   origin:[
     "http://localhost:3000/",
     "https://ugoontravel-43d92.web.app/"
-  ],
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: ['Content-Type', 'Authorization']
-}
-app.use(cors(corsOption));
-
+  ]
+}));
 app.use(express.json({ limit: "50mb" }));
+
+
 
 app.get("/", (req, res) => {
   res.send("Running UGoOnTravel Server");
