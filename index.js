@@ -23,8 +23,9 @@ app.use((req, res, next) => {
 
 app.use(cors({
   origin:[
-    "http://localhost:3000/",
-    "https://ugoontravel-43d92.web.app/"
+    "http://localhost:3000",
+    "https://ugoontravel-43d92.web.app",
+    "https://ugoontravel-43d92.firebaseapp.com"
   ]
 }));
 app.use(express.json({ limit: "50mb" }));
@@ -43,7 +44,7 @@ const client = new MongoClient(uri, {
 
 const run = async () => {
   try {
-    await client.connect();
+    // await client.connect();
     const database = client.db("travelDb");
     const packageCollection = database.collection("packages");
     const bookingCollection = database.collection("bookings");
